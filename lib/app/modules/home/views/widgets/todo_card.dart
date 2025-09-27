@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:todo_getx/app/modules/home/controllers/home_controller.dart';
 import 'package:todo_getx/app/widgets/alert_box.dart';
 import 'package:todo_getx/models/todo_model.dart';
 
@@ -12,38 +14,48 @@ class TodoCard extends StatelessWidget {
   ) {
     return SizedBox(
       height: 80,
-      child: Card(
-        color: Colors.black87,
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            ListTile(
-              onTap: () {},
-              title: Text(todo.title, style: TextStyle(color: Colors.white)),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Checkbox(
-                    value: todo.isCompleted,
-                    onChanged: (_) {},
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.delete),
-                    color: Colors.red,
-                    onPressed: () async {
-                      showDialog(
-                        context: context,
-                        builder: (context) => DeleteTodoDialog(
-                          todoName: todo.title,
-                          onConfirm: () async {},
-                        ),
-                      );
-                    },
-                  ),
-                ],
+      child: GestureDetector(
+        onTap: () {},
+        child: Card(
+          color: Colors.black87,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              ListTile(
+                title: Text(todo.title, style: TextStyle(color: Colors.white)),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Checkbox(
+                      value: todo.isCompleted,
+                      onChanged: (value) {
+                        if (value != null) {
+                          final ctrl = Get.find<TodoController>();
+                          ctrl.updateTodoStatus(todo, value);
+                        }
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.delete),
+                      color: Colors.red,
+                      onPressed: () async {
+                        showDialog(
+                          context: context,
+                          builder: (context) => DeleteTodoDialog(
+                            todoName: todo.title,
+                            onConfirm: () async {
+                              final ctrl = Get.find<TodoController>();
+                              await ctrl.deleteTodo(todo.id);
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

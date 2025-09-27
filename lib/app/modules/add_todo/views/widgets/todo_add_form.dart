@@ -1,14 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:todo_getx/app/modules/home/controllers/home_controller.dart';
+import 'package:todo_getx/app/widgets/text_field.dart';
 
 class TodoAddForm extends StatelessWidget {
-  TodoAddForm({super.key});
-  final _formKey = GlobalKey<FormState>();
+  const TodoAddForm({super.key, required this.formKey, required this.ctrl});
+  final GlobalKey<FormState> formKey;
+  final TodoController ctrl;
   @override
   Widget build(BuildContext context) {
     return Form(
-        key: _formKey,
+        key: formKey,
         child: Column(
-          children: [],
+          children: [
+            CustomTextFormField(
+              label: 'Tilte',
+              hint: 'Title',
+              controller: ctrl.titleController,
+              validator: (v) => ctrl.validateTitle(v),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            CustomTextFormField(
+              label: 'Details',
+              hint: 'Details',
+              controller: ctrl.detailsController,
+              validator: (v) => ctrl.validateDetails(v),
+            )
+          ],
         ));
   }
 }

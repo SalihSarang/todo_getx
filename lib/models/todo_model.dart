@@ -18,6 +18,15 @@ class TodoModel {
         isCompleted: json['isCompleted']);
   }
 
+  TodoModel copyWith(
+      {String? id, String? title, String? details, bool? isCompleted}) {
+    return TodoModel(
+        id: id ?? this.id,
+        title: title ?? this.title,
+        details: details ?? this.details,
+        isCompleted: isCompleted ?? this.isCompleted);
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,

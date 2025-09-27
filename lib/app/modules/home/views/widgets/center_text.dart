@@ -7,7 +7,7 @@ class CenterText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text("Todo added yet"),
+      child: Text(message),
     );
   }
 }

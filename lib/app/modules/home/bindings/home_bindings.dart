@@ -6,6 +6,6 @@ class HomeBindings extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<ApiService>(() => ApiService());
-    Get.lazyPut<HomeController>(() => HomeController());
+    Get.lazyPut<TodoController>(() => TodoController());
   }
 }

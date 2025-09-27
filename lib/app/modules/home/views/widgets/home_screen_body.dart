@@ -7,17 +7,17 @@ import 'package:todo_getx/app/modules/home/views/widgets/loading_state.dart';
 
 class HomeScreenBody extends StatelessWidget {
   HomeScreenBody({super.key});
-  final HomeController ctrl = Get.find<HomeController>();
+  final TodoController ctrl = Get.find<TodoController>();
 
   @override
   Widget build(BuildContext context) {
     return Obx(
       () {
-        if (ctrl.isLoading.value) LoadingState();
+        if (ctrl.isLoading.value) return LoadingState();
 
-        if (ctrl.error.isNotEmpty) CenterText(message: ctrl.error.value);
+        if (ctrl.error.isNotEmpty) return CenterText(message: ctrl.error.value);
 
-        if (ctrl.data.isEmpty) CenterText(message: 'No todo added yet');
+        if (ctrl.data.isEmpty) return CenterText(message: 'No todo added yet!');
 
         return TodoList(ctrl.data);
       },
